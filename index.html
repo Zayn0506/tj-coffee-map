@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html data-page-node-id="5aBaJOXYlrdycWHKo9pKRN" lang="zh-CN">
+<head data-page-node-id="L9pW3Qzrz5U1ZlB5elENJ4">
+<script data-page-node-id="IbpwLWy3lxtUYJPmTEPjy5" src="/page/page_comm/inject.js"></script>
+<meta data-page-node-id="0N46u7JI3iwwYCkWOweD7A" charset="UTF-8">
+<meta data-page-node-id="SuWKgmDzHo6qsBmmaQrWcC" content="width=device-width, initial-scale=1.0" name="viewport">
+<title data-page-node-id="Vjy8RDvMkn1dVTa6wrLc6u" data-pnid-children="P3vUqUTwxoMvRnwtxyd65u">天津咖啡办公地图 · 给山海的轮换办公计划</title>
+<link data-page-node-id="bbsdvUhougE1sMklaLYZxf" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css" rel="stylesheet">
+<style data-page-node-id="aMCmEyvZBzhDKIblKbnIdE" data-pnid-children="3HBtNaBdEUeBQ13xWHeDa5">
+  :root{
+    --bg:#f6f1e7; --card:#fffdf8; --ink:#3d2f23; --ink2:#7a6a58;
+    --accent:#8b5e3c; --accent2:#c89f7b; --line:#e5d9c6; --green:#6e8b5e;
+    --tag1:#e8f0e2; --tag2:#f0e6d8; --tag3:#eef0e6; --tag4:#f5e8e0;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--ink); font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; line-height:1.65;}
+  .wrap{max-width:1080px; margin:0 auto; padding:28px 20px 80px;}
+  header{text-align:center; padding:36px 10px 26px;}
+  header h1{font-size:34px; letter-spacing:2px; font-weight:700;}
+  header .sub{color:var(--ink2); margin-top:10px; font-size:15px;}
+  header .motto{display:inline-block; margin-top:16px; padding:8px 22px; border:1px solid var(--line); border-radius:999px; background:var(--card); color:var(--accent); font-size:14px;}
+  .stats{display:flex; gap:14px; justify-content:center; align-items:center; margin:26px 0 8px; flex-wrap:wrap;}
+  .stats .pill{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px 22px; text-align:center; min-width:130px;}
+  .stats .num{font-size:24px; font-weight:700; color:var(--accent);}
+  .stats .lab{font-size:12px; color:var(--ink2);}
+  .progress-outer{max-width:560px; height:10px; background:var(--line); border-radius:999px; margin:10px auto 4px; overflow:hidden;}
+  .progress-inner{height:100%; width:0%; background:linear-gradient(90deg,var(--accent2),var(--accent)); border-radius:999px; transition:width .4s;}
+  .toolbar{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin:22px 0 6px;}
+  .filter,.randbtn,.viewbtn{border:1px solid var(--line); background:var(--card); color:var(--ink); padding:8px 18px; border-radius:999px; cursor:pointer; font-size:14px; transition:.2s;}
+  .filter:hover,.randbtn:hover,.viewbtn:hover{border-color:var(--accent);}
+  .filter.active,.viewbtn.active{background:var(--accent); color:#fff; border-color:var(--accent);}
+  .randbtn{background:var(--ink); color:#fff; border-color:var(--ink);}
+  .viewbar{display:flex; gap:10px; justify-content:center; margin-top:14px;}
+  .rand-result{text-align:center; color:var(--accent); font-size:15px; min-height:24px; margin-bottom:14px; font-weight:600;}
+  section{margin-top:34px;}
+  section h2{font-size:21px; padding-left:12px; border-left:5px solid var(--accent); margin-bottom:6px;}
+  section .sec-desc{color:var(--ink2); font-size:14px; margin:0 0 14px 17px;}
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:16px;}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:18px 18px 14px; position:relative; transition:.2s; display:flex; flex-direction:column;}
+  .card:hover{transform:translateY(-2px); box-shadow:0 6px 18px rgba(61,47,35,.08);}
+  .card.done{border-color:var(--green); background:#fbfcf7;}
+  .card .top{display:flex; justify-content:space-between; align-items:flex-start; gap:8px;}
+  .card h3{font-size:17px; font-weight:700;}
+  .card .score{color:var(--accent2); font-size:13px; white-space:nowrap;}
+  .tags{margin:8px 0 6px; display:flex; gap:6px; flex-wrap:wrap;}
+  .tag{font-size:12px; padding:2px 10px; border-radius:999px;}
+  .t-class{background:var(--tag1); color:#4a6b3c;}
+  .t-office{background:var(--tag2); color:#8b5e3c;}
+  .t-study{background:var(--tag3); color:#4e6b85;}
+  .t-fun{background:var(--tag4); color:#a05c3c;}
+  .card .meta{font-size:13px; color:var(--ink2); margin-bottom:6px;}
+  .card .desc{font-size:14px; margin-bottom:6px;}
+  .card .order{font-size:13px; color:var(--accent); margin-bottom:10px;}
+  .card .foot{margin-top:auto; display:flex; justify-content:space-between; align-items:center; border-top:1px dashed var(--line); padding-top:10px;}
+  .checkbtn{border:1px solid var(--line); background:#fff; color:var(--ink2); padding:6px 14px; border-radius:999px; cursor:pointer; font-size:13px; transition:.2s;}
+  .checkbtn:hover{border-color:var(--green); color:var(--green);}
+  .card.done .checkbtn{background:var(--green); color:#fff; border-color:var(--green);}
+  .maplink{font-size:13px; color:var(--ink2); text-decoration:none;}
+  .maplink:hover{color:var(--accent);}
+  .donedate{font-size:12px; color:var(--green); margin-top:6px;}
+  #mapview{display:none;}
+  #map{height:560px; border-radius:16px; border:1px solid var(--line);}
+  .map-legend{display:flex; gap:16px; flex-wrap:wrap; justify-content:center; margin:12px 0 4px; font-size:13px; color:var(--ink2);}
+  .map-legend span{display:inline-flex; align-items:center; gap:6px;}
+  .dot{width:14px; height:14px; border-radius:50%; display:inline-block;}
+  .leaflet-popup-content b{font-size:15px;}
+  .leaflet-popup-content{font-size:13px;}
+  .tips{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:22px 26px; margin-top:40px;}
+  .tips h2{border:none; padding:0; margin-bottom:12px; font-size:19px;}
+  .tips li{margin:8px 0 8px 20px; font-size:14.5px;}
+  .tips .note{font-size:12.5px; color:var(--ink2); margin-top:14px; border-top:1px dashed var(--line); padding-top:10px;}
+  @media (max-width:640px){ header h1{font-size:26px;} .grid{grid-template-columns:1fr;} #map{height:420px;} }
+</style>
+</head>
+<body data-page-node-id="D7XAUZymqVxCfWHKHNxiTm">
+<div data-page-node-id="zIuwFdqiQvhElfId5VpuHB" class="wrap">
+  <header data-page-node-id="1uR7ue2mBAbIkYTc7sHeQP">
+    <h1 data-page-node-id="3CFrQRnGBJzffrrSiytcXl"><!--pnid:PYzr6hUK4WNMzDumJ7DfBB-->☕ 天津咖啡办公地图</h1>
+    <div data-page-node-id="UT4kDOii4ir8feEi9yKTyY" class="sub"><!--pnid:gHMhs7icbIIrlI7WyJqFxQ-->给在家憋到发闷的线上课老师 · 一家一家喝过去，把整座天津喝成自己的办公室</div>
+    <div data-page-node-id="bXW0YAEnmlch7FCPVCgEn4" class="motto"><!--pnid:8mo6aV58O2XrSeUrZKIr4z-->「换个地方，灵感就换一口气」</div>
+    <div data-page-node-id="QsqnQPs1O0stnbPXJWJHjF" class="stats">
+      <div data-page-node-id="8v9jlOX7n2k25mh4rm2Tfh" class="pill"><div data-page-node-id="YXtuB3oBk9zl56Wz8SbyXg" class="num" id="st-done"><!--pnid:4Dl4zmoOdaFSN9aPHSZP2y-->0</div><div data-page-node-id="04QvS3elDxkEnUBEN4PxbK" class="lab"><!--pnid:AUrRlyWSKjK5ilHGaU1VBc-->已打卡</div></div>
+      <div data-page-node-id="2ubU3icUMpCsqsYdlJmPLU" class="pill"><div data-page-node-id="1DrWa7PcuDKsBVrzh8tHxQ" class="num" id="st-total"><!--pnid:lhaxJ5Q1RPpPszL2JxyCvg-->22</div><div data-page-node-id="dz0R6FsIHRIkpjK5UmzpU5" class="lab"><!--pnid:u9JMyPkcv5uLLetx5ESJn3-->收录咖啡馆</div></div>
+      <div data-page-node-id="CUEh2UphnNunCSsjTg65sX" class="pill"><div data-page-node-id="HLDlbZao1DYJwngzM8F2Nf" class="num" id="st-remain"><!--pnid:mrJBbVUlW6bZ1wvjnRHhci-->22</div><div data-page-node-id="PpjPMpLrO02NgN9LtVSwSJ" class="lab"><!--pnid:Sn6jFEz0geSyPIlwWbrl78-->还没去</div></div>
+    </div>
+    <div data-page-node-id="nC4uhtzhXcRqEDnb0wrYo4" class="progress-outer"><div data-page-node-id="FrJYJe6zTkApYQYwotBnOH" class="progress-inner" id="prog"></div></div>
+    <div data-page-node-id="Ec0SaGJAgBnZUMsi0PHCwO" class="viewbar">
+      <button data-page-node-id="Mxjap8wNaLRBMI8b9sJxbD" class="viewbtn active" id="btn-list"><!--pnid:F8gwdm5sLe0GuFALjL8eOQ-->📋 列表视图</button>
+      <button data-page-node-id="07ySEiQ0G6DNXmLnEnXrL8" class="viewbtn" id="btn-map"><!--pnid:7GQthamunz0IfkbNjXLSit-->🗺 地图视图</button>
+    </div>
+  </header>
+
+  <div data-page-node-id="93Ye0QIvjFkdC6RM1j7UvM" class="toolbar" id="filters">
+    <button data-page-node-id="yz2Xph7kp6Xc0QarH9LtZv" class="filter active" data-f="all"><!--pnid:1kqQGgjWdduhPCggWi9Dvz-->全部</button>
+    <button data-page-node-id="aJEnSlnlwHaSNomsK7quik" class="filter" data-f="class"><!--pnid:tbK5U5G5dJCNc50YZoHKly-->🎧 上课首选（安静/独立空间）</button>
+    <button data-page-node-id="TYSZva4CJswF6uov2xqEsj" class="filter" data-f="office"><!--pnid:fmP4SChNr0AUXTQW3Tk0hQ-->💻 深度办公（插座/wifi/久坐）</button>
+    <button data-page-node-id="FVUMNL2Cni4QCjD0pbPtgg" class="filter" data-f="study"><!--pnid:ykpwQ1VLYym8BAZJ8QV3jp-->📖 学生氛围（备课写稿）</button>
+    <button data-page-node-id="Oa1Gi1eaoZCa9kSS83Wwhb" class="filter" data-f="fun"><!--pnid:OewIAV2KDU4QMdGpHVJ9XC-->🌿 休闲打卡（上完课散心）</button>
+    <button data-page-node-id="UKVsGnk8U7ov3SYb8sVbC9" class="randbtn" id="randbtn"><!--pnid:VDwjVZYFGP80V4T3yosh75-->🎲 今天去哪家？</button>
+  </div>
+  <div data-page-node-id="oo9LtJvU3rO0JO1MQQZ1Mp" class="rand-result" id="rand-result"></div>
+
+  <div data-page-node-id="5gzc9VE9m80LgeMMgAEoFA" id="listview"><div data-page-node-id="ibaUCNFe03JDoArWVFXOx4" id="content"></div></div>
+  <div data-page-node-id="s702hIPR0HPv5gqWAFneBK" id="mapview">
+    <div data-page-node-id="zEm8phqPCc86HT9Df4gZ8y" class="map-legend">
+      <span data-page-node-id="GxndpKs5zMvuwnTnIfYUa6"><span data-page-node-id="6Jben3GeWuTwA1R361XgF3" class="dot" style="background:#6e8b5e"></span><!--pnid:hZx20myLh1BDP7YdFvCmyR-->上课首选</span>
+      <span data-page-node-id="Uu5rGFi2xW1N0ftzEwMSGp"><span data-page-node-id="PoNf8McrE4FqOslwQZtPna" class="dot" style="background:#8b5e3c"></span><!--pnid:boowb0L9gnfYCUEx0IqEhw-->深度办公</span>
+      <span data-page-node-id="SDzeJ64iaovywZbwsrb12l"><span data-page-node-id="yBddJWvSKgFROtSVTx99lF" class="dot" style="background:#5b7a99"></span><!--pnid:TnnaPHro76SLIPTmJnsmAn-->学生氛围</span>
+      <span data-page-node-id="3ncp33CfR1WNjw792iNNqB"><span data-page-node-id="pb6b4XQ4cjhIXg6r3CEYjn" class="dot" style="background:#c9793e"></span><!--pnid:OkS5xD8BgymxH4xMyER1iJ-->休闲打卡</span>
+      <span data-page-node-id="RUv5vad2fr7lyATk9rtLU0"><span data-page-node-id="2EbXmb7b2N4X4bu5qnpUcf" class="dot" style="background:#6e8b5e; outline:3px solid #f2c94c"></span><!--pnid:MjOkn8H7PKl1YHoNBGiizt-->已打卡</span>
+    </div>
+    <div data-page-node-id="SwDVAft465nj8tKTuhfPbj" id="map"></div>
+    <p data-page-node-id="zFGaUqQZj53zzts1n3p2iF" style="font-size:12.5px; color:var(--ink2); text-align:center; margin-top:8px"><!--pnid:wFQ0uWC0b31uU0L8j0U2SL-->※ 地图标记为大致位置（精确到街道），精确导航请点卡片或气泡里的「导航」按钮跳高德。</p>
+  </div>
+
+  <div data-page-node-id="0lpYgeJevSYf1yWF95yyLX" class="tips">
+    <h2 data-page-node-id="wRc66fZpI27z1HB3PGAYlR"><!--pnid:lnHZAhNsUEzB4YdByz6Aa0-->🎧 咖啡店上课生存指南（ENFP 友好版）</h2>
+    <ul data-page-node-id="PD8VRw46k5ejhgQux05TJJ">
+      <li data-page-node-id="2Hf3hk6hkZ2oROOqaBA34o"><b data-page-node-id="iAxQ0eOogDNGTx2GsSv1o7"><!--pnid:NNzahS0ab2D4hF4pAQ0ryv-->时段优先：</b><!--pnid:My7V3gH9O9vmCqJXhcDUob-->工作日 9:00–11:30 最安静，周末下午的网红店基本是菜市场，别硬上。</li>
+      <li data-page-node-id="BlU5rvH6eSvSKqHX7xIhAl"><b data-page-node-id="F8J1j5DDZVPFgJVQeI5GNo"><!--pnid:T48aVLB7AcrsACYNs7Nuw6-->进门一句话：</b><!--pnid:l4HY9uc2glMUKl31YCfZNy-->点单时轻轻说一句「待会儿有节线上课，说话会有点声音，麻烦啦」——90% 的店主会主动把你往安静角落引。</li>
+      <li data-page-node-id="yBS8afW9VUwdQswmX0YN7e"><b data-page-node-id="nek4AEvGmML1Ze0G7ZcYI5"><!--pnid:Rm9pNqd1YxjWy0cc86hjLK-->选位心法：</b><!--pnid:XZyBZmUe27SUc3HIxWtnfw-->背对人群坐、远离门口和吧台；有二楼/阁楼/包间的店（咖啡颂、一尺花园、贝尔）直接上二楼。</li>
+      <li data-page-node-id="4m9JI5eKnlwLmkM8T6986c"><b data-page-node-id="SFuZ9rquYa89kTze7kohrb"><!--pnid:uCp3xDWYvDQGpS6N6P2ii3-->装备清单：</b><!--pnid:7kQ4WWGc1Es54nfBFiyjCy-->手机热点（店里 wifi 抽风时的保命符）、耳返或半入耳降噪、笔记本支架、充电宝——插座是玄学，永远别全信。</li>
+      <li data-page-node-id="4wHLN459C7DyFyal5jZkcN"><b data-page-node-id="9V1dzrDMmrSvpcs2aXVn2i"><!--pnid:o5g3sV5UsXFfjrwllxT3y2-->ENFP 充电法：</b><!--pnid:U2OGlnQjJaib6jcIkpdDh8-->上完课别急着回家——去人多热闹的店（大熊叔叔撸狗聊天、张小猫撸猫、民园周边坐坐），和店主或邻桌聊两句，电量立刻回满。连着独处办公超过三天，就强制自己排一天「休闲打卡」组，去人味儿最足的地方充能。</li>
+    </ul>
+    <div data-page-node-id="O4rjQ17EbYfylrmebswXTR" class="note"><!--pnid:IlI7WeXLIYrmymgdXW3FjY-->※ 收录信息整理自大众点评、小红书等公开测评（2024–2026），营业时间与人均消费可能变动，出门前建议在高德/点评上再确认一眼。地图会陪你一起更新。</div>
+  </div>
+</div>
+
+<script data-page-node-id="w0bsI1oMykfrWnrSgxX8pg" src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js"></script>
+<script data-page-node-id="sNmUMPWcCGqXnb7a30ddtf" data-pnid-children="oVJMDSc5FiFQeYN7FVuNBn">
+const AREA_TITLES = {
+  wudadao:["壹 · 五大道 · 和平区洋楼群","老建筑密度最高的片区，一条重庆道二十多家咖啡馆。上课、办公、打卡都能在这一片轮着来，地铁 1 号线营口道站下车步行可达。"],
+  yifeng:["贰 · 意风区 · 河北海河北岸","百年意大利兵营和奥匈俱乐部改的咖啡空间，游客多但躲进二楼就清净了。上完课沿海河散步，是天津最舒服的收工路线。"],
+  univ:["叁 · 南大天大周边 · 八里台学府圈","学生浓度最高的区域，备课写稿自带「图书馆氛围」，性价比也最高。离你家近的话，这一片可以当日常主力。"],
+  other:["肆 · 自习室 · 保底方案","纯安静无噪音，适合录课和直播课等特别需要安静的场合，按小时或按天收费。"]
+};
+const SHOPS = [
+  // 五大道
+  {area:"wudadao", name:"咖啡颂 Coffice（重庆道店）", tags:["class","fun"], addr:"和平区重庆道169号", hours:"9:30–21:00", price:"人均约60元", score:"4.7", lat:39.1118, lng:117.2000,
+   desc:"1936 年英式联排老洋楼里的民国客厅，一层散座、二层大包间、三层还有放映室。工作日下午客人少、大家说话都轻声，是五大道最经典的「一个人待一天」的店。",
+   order:"推荐：土耳其咖啡（送一颗软糖）、拿铁、胡萝卜蛋糕"},
+  {area:"wudadao", name:"桑丘书店（常德道店）", tags:["office","class"], addr:"和平区常德道35号", hours:"约10:00–21:00", price:"人均约40元", score:"4.6", lat:39.1100, lng:117.1970,
+   desc:"日式小清新书店，一楼咖啡、二楼自习区，沿街大玻璃窗采光极好。书店自带「请安静」结界，上课和写讲义都很稳。",
+   order:"推荐：拿铁 + 从书架上随手抽一本闲书"},
+  {area:"wudadao", name:"豆仓咖啡", tags:["office"], addr:"和平区睦南道金林村4号（小德张故居院内）", hours:"约10:00–19:00", price:"人均约40元", score:"4.7", lat:39.1090, lng:117.1990,
+   desc:"仓储质感的精品咖啡店，裸砖墙配复古吊灯，主打手冲，手冲爱好者专程来。小店安静，拍照的人虽多但不影响干活。",
+   order:"推荐：琥珀 Dirty、手冲（让主理人按口味推荐）"},
+  {area:"wudadao", name:"二十英里咖啡", tags:["office","fun"], addr:"和平区鞍山道51号", hours:"约11:00–19:00", price:"人均约45元", score:"4.7", lat:39.1175, lng:117.1870,
+   desc:"自烘焙精品小店，轻工业混中古侘寂风，低调安静，菜单常换常新，很多老饕专程来。适合带一沓稿子慢慢磨。",
+   order:"推荐：青苹果 Dirty、草房子特调"},
+  {area:"wudadao", name:"捌盎司咖啡", tags:["office","class"], addr:"和平区沈阳道新华里14号", hours:"10:00–19:00", price:"人均约43元", score:"4.8", lat:39.1185, lng:117.1900,
+   desc:"点评高分社区店，被评价为「恰到好处的宁静感」。规模不大但座位舒展，一个人抱着电脑坐一下午毫无压力。",
+   order:"推荐：拿铁、手冲"},
+  {area:"wudadao", name:"MIDI咖啡", tags:["office"], addr:"和平区新华路39号-1门", hours:"11:00–21:00", price:"人均约56元", score:"4.7", lat:39.1195, lng:117.1930,
+   desc:"专业咖啡 + 简餐，重点是有二楼的「里屋」，专门适合办公。营业到晚上九点，晚上要上课也能撑住场。",
+   order:"推荐：奶咖 + 简餐当午饭"},
+  {area:"wudadao", name:"ASOS COFFEE", tags:["office"], addr:"和平区解放北路191号", hours:"约9:00–20:00", price:"人均约50元", score:"4.6", lat:39.1235, lng:117.2060,
+   desc:"泰安道五大院片区欧式老建筑里的店，空间宽敞明亮，偏商务风，有 Brunch，门口好停车。赶时间去这儿最省心。",
+   order:"推荐：拿铁、Brunch"},
+  {area:"wudadao", name:"星巴克臻选（恒隆广场店）", tags:["office"], addr:"和平区兴安路恒隆广场（原浙江兴业银行大楼）", hours:"7:30–21:30", price:"人均约40元", score:"4.6", lat:39.1258, lng:117.1975,
+   desc:"开在百年银行老楼里的臻选门店，层高极高非常气派。连锁店的确定性就是它的优点：插座、wifi、卫生间全部稳，永远可以闭眼进。",
+   order:"推荐：美式 + 可颂，坐大堂高桌"},
+  {area:"wudadao", name:"棉里咖啡", tags:["fun"], addr:"和平区河北路光明里大楼1号", hours:"约10:00–20:00", price:"人均约50元", score:"4.7", lat:39.1105, lng:117.2045,
+   desc:"1939 年独栋老洋房自带庭院和复古旋转楼梯，白天咖啡晚上变餐酒吧，二三层和露台安静，宠物友好。上完课来这儿晒太阳收工。",
+   order:"推荐：棉里小白熊、树莓山楂拿铁"},
+  {area:"wudadao", name:"千橘樘院", tags:["fun"], addr:"和平区大理道5号樘院院内", hours:"约10:00–19:00", price:"人均约50元", score:"4.7", lat:39.1105, lng:117.1955,
+   desc:"五大道里少见的中式古院（原蔡氏家祠），青砖黛瓦配海棠树，和周围的洋楼反差感极强。春天海棠季来，氛围感拉满。",
+   order:"推荐：香蕉拿铁、梅鲁AA手冲"},
+  {area:"wudadao", name:"AisinGioro cafe", tags:["fun","class"], addr:"和平区重庆道77号", hours:"约10:00–22:00", price:"人均约60元", score:"4.7", lat:39.1112, lng:117.2040,
+   desc:"五大道独栋红砖洋楼，三层复古空间，二三层有独立包间（商务风/宫廷风/榻榻米），包间上课是隐藏玩法，白咖夜酒，逛民园广场顺路。",
+   order:"推荐：福禄拿铁（季节限定）、熔岩蛋糕"},
+  // 意风区
+  {area:"yifeng", name:"一尺花园（奥匈帝国俱乐部旧址店）", tags:["class","fun"], addr:"河北区建国道100号", hours:"10:00–21:00", price:"人均约58元", score:"4.7", lat:39.1470, lng:117.1900,
+   desc:"1902 年奥匈帝国俱乐部旧址，三层洋楼带庭院，满屋绿植。三楼阁楼最安静，独处办公一绝；庭院下午茶是天津天花板级氛围。",
+   order:"推荐：湖岸咖啡、生乳芝士蛋糕"},
+  {area:"yifeng", name:"贝尔咖啡 Bell Coffee", tags:["class","office"], addr:"河北区光明道20号（原意大利兵营二楼）", hours:"9:30–18:00", price:"人均约43元", score:"4.8", lat:39.1480, lng:117.1920,
+   desc:"百年意大利兵营旧址里的精品手冲店，店名谐音天津话「倍儿」。座位私密性好、店内安静低调，点评里明确写着适合办公阅读，意风区上课首选。",
+   order:"推荐：手冲（分三段温度上，看豆子变魔术）"},
+  {area:"yifeng", name:"星巴克非遗概念店（新意街店）", tags:["office"], addr:"河北区自由道60-62号", hours:"8:00–22:00", price:"人均约41元", score:"4.7", lat:39.1485, lng:117.1940,
+   desc:"全国独一份的津味非遗主题臻选店，小洋楼里空间够大、开到晚上十点。逛完意风区想找个稳的地方坐坐，就它。",
+   order:"推荐：Any 星巴克经典款"},
+  // 大学周边
+  {area:"univ", name:"大熊叔叔的咖啡馆（南开大学店）", tags:["study"], addr:"南开区复康路荣迁里8-105", hours:"11:00–20:00", price:"人均约56元", score:"4.6", lat:39.1060, lng:117.1640,
+   desc:"南开大学旁边学生浓度极高，适合写论文写讲义。店里有只大金毛，写累了可以撸狗回血——和狗聊天也算社交，ENFP 亲测有效。",
+   order:"推荐：奶咖 + 撸狗 5 分钟"},
+  {area:"univ", name:"石头咖啡 STONE COFFEE", tags:["study","office"], addr:"南开区复康路南开大学西南村励耘路14号楼1门104", hours:"11:00–20:00", price:"人均约29元", score:"4.6", lat:39.1055, lng:117.1660,
+   desc:"西南村里的小店，面积不大但装修用心，人不多能静下心，店内有只小美短。人均不到三十，学生党性价比之王，备课预算友好。",
+   order:"推荐：手冲、甜点"},
+  {area:"univ", name:"张小猫的咖啡馆", tags:["fun","study"], addr:"南开区南开大学西南村（原戈德印章院内）", hours:"约11:00–20:00", price:"人均约35元", score:"4.6", lat:39.1050, lng:117.1670,
+   desc:"店如其名，店里养着好几只猫。被猫咪围观着改讲义，效率不一定高但心情一定好，适合状态低迷时的「猫疗日」。",
+   order:"推荐：拿铁 + 猫条（给猫的）"},
+  {area:"univ", name:"遇咖啡和茶（天津大学店）", tags:["study"], addr:"南开区天津大学湖滨道六村2号楼1层", hours:"9:00–18:30", price:"人均约31元", score:"4.6", lat:39.1090, lng:117.1710,
+   desc:"天大校内湖边，早晨九点开门，校园里绿荫环绕，是「享受一下午轻松美好时光」的那种店。适合上午开课前的备态时间。",
+   order:"推荐：咖啡或茶都稳"},
+  {area:"univ", name:"天津大学校友之家咖啡厅", tags:["study","office"], addr:"南开区卫津路92号天津大学专家楼1层", hours:"周一至五 8:00–21:00，周末 10:00–21:00", price:"人均约31元", score:"4.2", lat:39.1115, lng:117.1720,
+   desc:"天大专家楼一层，小清新风格，工作日早八点就开门——天津咖啡圈里少见的早鸟，适合早晨直播课前的热身据点。",
+   order:"推荐：美式"},
+  {area:"univ", name:"悦读家（白堤路店）", tags:["study"], addr:"南开区白堤路美湖里7号楼底商", hours:"约10:00–22:00", price:"人均约35元", score:"4.5", lat:39.1130, lng:117.1620,
+   desc:"毗邻南大天大的书店咖啡，学生扎堆，营业到晚上十点，咖啡甚至配梅子酒。晚间场独处写稿的不二之选。",
+   order:"推荐：拿铁（晚上可以加梅子酒）"},
+  // 其他
+  {area:"other", name:"山影书房", tags:["class"], addr:"和平区（点评搜「山影书房」取最近门店）", hours:"约10:00–21:00", price:"按人数收费，含饮品", score:"4.8", lat:39.1110, lng:117.2000, approx:true,
+   desc:"文具店 + 自习室的结合体，有 BGM 但非常安静，「是能让人心静的氛围」。按小时/按天收费还送饮品，要上特别需要安静的大课就来这儿。",
+   order:"推荐：环境本身就是招牌"},
+  {area:"other", name:"HAUS嗨书吧（红旗南路店）", tags:["class","office"], addr:"南开区红旗南路逸秀大厦15层1507（地铁红旗南路站D口）", hours:"9:00–24:00", price:"人均约23元", score:"4.8", lat:39.0880, lng:117.1590,
+   desc:"自习 + 办公会议 + 咖啡甜品三合一，有独立的办公会议位，开到深夜十二点。临时要找能大声说话又不吵到别人的地方，来这层楼就对。",
+   order:"推荐：饮品随便，重点是工位"}
+];
+
+const KEY = "tj_coffee_checkins_shanhai";
+let checkins = {};
+try { checkins = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e) { checkins = {}; }
+let curFilter = "all";
+
+function save(){ localStorage.setItem(KEY, JSON.stringify(checkins)); }
+function fmtDate(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function tagLabel(t){ return {class:"🎧上课首选", office:"💻深度办公", study:"📖学生氛围", fun:"🌿休闲打卡"}[t]; }
+function tagClass(t){ return {class:"t-class", office:"t-office", study:"t-study", fun:"t-fun"}[t]; }
+function mainTag(s){ return s.tags[0]; }
+const TAG_COLOR = {class:"#6e8b5e", office:"#8b5e3c", study:"#5b7a99", fun:"#c9793e"};
+
+function render(){
+  const content = document.getElementById("content");
+  content.innerHTML = "";
+  Object.keys(AREA_TITLES).forEach(area=>{
+    const shops = SHOPS.filter(s=>s.area===area && (curFilter==="all" || s.tags.includes(curFilter)));
+    if(!shops.length) return;
+    const sec = document.createElement("section");
+    sec.innerHTML = `<h2>${AREA_TITLES[area][0]}</h2><div class="sec-desc">${AREA_TITLES[area][1]}</div>`;
+    const grid = document.createElement("div"); grid.className="grid";
+    shops.forEach(s=>{
+      const done = !!checkins[s.name];
+      const card = document.createElement("div");
+      card.className = "card" + (done?" done":"");
+      card.innerHTML = `
+        <div class="top"><h3>${s.name}</h3><span class="score">★${s.score}</span></div>
+        <div class="tags">${s.tags.map(t=>`<span class="tag ${tagClass(t)}">${tagLabel(t)}</span>`).join("")}</div>
+        <div class="meta">📍 ${s.addr}　🕐 ${s.hours}　💰 ${s.price}</div>
+        <div class="desc">${s.desc}</div>
+        <div class="order">☕ ${s.order}</div>
+        <div class="foot">
+          <button class="checkbtn">${done?"✓ 已打卡":"打卡这家"}</button>
+          <a class="maplink" target="_blank" href="https://www.amap.com/search?query=${encodeURIComponent(s.name.split("（")[0])}&city=120000">导航 ↗</a>
+        </div>
+        ${done?`<div class="donedate">🗓 ${checkins[s.name]} 打卡</div>`:""}`;
+      card.querySelector(".checkbtn").onclick = ()=>{
+        if(checkins[s.name]){ delete checkins[s.name]; }
+        else { checkins[s.name] = fmtDate(new Date()); }
+        save(); render(); updateStats(); refreshMarkers();
+      };
+      grid.appendChild(card);
+    });
+    sec.appendChild(grid);
+    content.appendChild(sec);
+  });
+}
+
+function updateStats(){
+  const total = SHOPS.length;
+  const done = Object.keys(checkins).length;
+  document.getElementById("st-done").textContent = done;
+  document.getElementById("st-total").textContent = total;
+  document.getElementById("st-remain").textContent = total - done;
+  document.getElementById("prog").style.width = (done/total*100).toFixed(1) + "%";
+}
+
+document.getElementById("filters").addEventListener("click", e=>{
+  if(e.target.classList.contains("filter")){
+    document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));
+    e.target.classList.add("active");
+    curFilter = e.target.dataset.f;
+    document.getElementById("rand-result").textContent = "";
+    render(); refreshMarkers();
+  }
+});
+
+document.getElementById("randbtn").onclick = ()=>{
+  const pool = SHOPS.filter(s=>!checkins[s.name]);
+  const r = document.getElementById("rand-result");
+  if(!pool.length){ r.textContent = "🎉 22 家全部打卡完毕！该更新第二版地图啦，随时来找我。"; return; }
+  const pick = pool[Math.floor(Math.random()*pool.length)];
+  r.textContent = "🎲 命运的选择：今天去「" + pick.name + "」——" + pick.addr;
+};
+
+/* ---------- 地图视图 ---------- */
+let map = null, markers = [];
+function initMap(){
+  map = L.map("map", {zoomControl:true}).setView([39.118, 117.185], 13);
+  L.tileLayer("https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=7&x={x}&y={y}&z={z}", {
+    subdomains:["1","2","3","4"], maxZoom:18, attribution:"© 高德地图"
+  }).addTo(map);
+}
+function markerIcon(s){
+  const done = !!checkins[s.name];
+  const color = done ? "#f2c94c" : TAG_COLOR[mainTag(s)];
+  const emoji = done ? "✅" : {class:"🎧", office:"💻", study:"📖", fun:"🌿"}[mainTag(s)];
+  return L.divIcon({
+    className:"",
+    html:`<div style="width:36px;height:36px;border-radius:50%;background:${color};color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 8px rgba(0,0,0,.3);${done?"outline:3px solid #f2c94c;outline-offset:2px;":""}">${emoji}</div>`,
+    iconSize:[36,36], iconAnchor:[18,18]
+  });
+}
+function refreshMarkers(){
+  if(!map) return;
+  markers.forEach(m=>map.removeLayer(m)); markers = [];
+  SHOPS.filter(s=>curFilter==="all" || s.tags.includes(curFilter)).forEach(s=>{
+    const m = L.marker([s.lat, s.lng], {icon:markerIcon(s)}).addTo(map);
+    m.bindPopup(`<b>${s.name}</b>${checkins[s.name]?" ✅":""}<br>
+      <span style="color:#888">${s.addr}${s.approx?"（标记为大致位置）":""}</span><br>
+      ${s.tags.map(t=>tagLabel(t)).join(" · ")}<br>
+      ${s.order}<br>
+      <a href="https://www.amap.com/search?query=${encodeURIComponent(s.name.split("（")[0])}&city=120000" target="_blank">在高德中导航 ↗</a>`);
+    markers.push(m);
+  });
+}
+function showView(v){
+  document.getElementById("listview").style.display = v==="list" ? "block" : "none";
+  document.getElementById("mapview").style.display = v==="map" ? "block" : "none";
+  document.getElementById("btn-list").classList.toggle("active", v==="list");
+  document.getElementById("btn-map").classList.toggle("active", v==="map");
+  if(v==="map"){
+    if(!map) initMap();
+    setTimeout(()=>{ map.invalidateSize(); refreshMarkers(); }, 60);
+  }
+}
+document.getElementById("btn-list").onclick = ()=>showView("list");
+document.getElementById("btn-map").onclick = ()=>showView("map");
+
+render(); updateStats();
+</script>
+</body>
+</html>
